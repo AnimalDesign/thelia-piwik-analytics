@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://thelia.net/schema/dic/module" xsi:schemaLocation="http://thelia.net/schema/dic/module http://thelia.net/schema/dic/module/module-2_1.xsd">
+	<fullnamespace>HookPiwikAnalytics\HookPiwikAnalytics</fullnamespace>
+	<descriptive locale="en_US">
+		<title>Piwik Analytics</title>
+	</descriptive>
+	<descriptive locale="fr_FR">
+		<title>Piwik Statistiques</title>
+	</descriptive>
+	<descriptive locale="de_DE">
+		<title>Piwik Analytics</title>
+	</descriptive>
+	<languages>
+		<language>en_US</language>
+		<language>fr_FR</language>
+        <language>de_DE</language>
+	</languages>
+	<version>1.0.0</version>
+	<author>
+		<name>ANIMAL</name>
+		<email>studio@animal.at</email>
+	</author>
+	<type>classic</type>
+	<thelia>2.0.0</thelia>
+	<stability>other</stability>
+</module>

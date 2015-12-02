@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://thelia.net/schema/dic/config" xsi:schemaLocation="http://thelia.net/schema/dic/config http://thelia.net/schema/dic/config/thelia-1.0.xsd">
+
+	<loops></loops>
+
+	<forms>
+		<form class="HookPiwikAnalytics\Form\Configuration" name="hookpiwikanalytics.configuration.form"/>
+	</forms>
+
+	<commands></commands>
+
+	<hooks>
+		<hook class="HookPiwikAnalytics\Hook\FrontHook" id="hookpiwikanalytics.hook.front" scope="request">
+			<tag event="main.body-bottom" name="hook.event_listener"/>
+		</hook>
+	</hooks>
+
+</config>
