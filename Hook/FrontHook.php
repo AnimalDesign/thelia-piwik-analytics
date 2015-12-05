@@ -71,6 +71,30 @@ class FrontHook extends BaseHook
             $url = preg_replace('#^https?://#', '', $url);
             $url = '//'.ltrim($url, '//');
             $url = rtrim($url, '/').'/';
+            
+            if((bool)ConfigQuery::read('hookpiwikanalytics_enable_subdomains', false)) {
+                // Get host w/o www or subdomain, see http://snipplr.com/view/61235/
+                preg_match("/[^\.\/]+\.[^\.\/]+$/", $_SERVER['HTTP_HOST'], $matches);
+
+                $options[] = array(
+                    'setCookieDomain',
+                    '*.'.$matches[0]
+                );
+            }
+
+            if(!empty(trim(ConfigQuery::read('hookpiwikanalytics_custom_campaign_name', '')))) {
+                $options[] = array(
+                    'setCampaignNameKey',
+                    ConfigQuery::read('hookpiwikanalytics_custom_campaign_name')
+                );
+            }
+            
+            if(!empty(trim(ConfigQuery::read('hookpiwikanalytics_custom_campaign_keyword', '')))) {
+                $options[] = array(
+                    'setCampaignKeywordKey',
+                    ConfigQuery::read('hookpiwikanalytics_custom_campaign_keyword')
+                );
+            }
 
             $code = '
             <script type="text/javascript">
@@ -78,8 +102,7 @@ class FrontHook extends BaseHook
             
             foreach ($options as $option) {
                 $code .= '
-                    _paq.push('.json_encode($option).');
-                ';
+                _paq.push('.json_encode($option).');';
             }
             
             $code .= '

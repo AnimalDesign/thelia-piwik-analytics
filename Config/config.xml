@@ -11,7 +11,7 @@
 	<commands></commands>
 
 	<hooks>
-		<hook class="HookPiwikAnalytics\Hook\FrontHook" id="hookpiwikanalytics.hook.front" scope="request">
+		<hook class="HookPiwikAnalytics\Hook\FrontHook" id="hookpiwikanalytics.hook.front.main" scope="request">
 			<tag event="main.body-bottom" name="hook.event_listener"/>
 		</hook>
 	</hooks>

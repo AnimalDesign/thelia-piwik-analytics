@@ -34,7 +34,9 @@ class Configuration extends BaseAdminController
 
             ConfigQuery::write('hookpiwikanalytics_url', $data['hookpiwikanalytics_url'], false, true);
             ConfigQuery::write('hookpiwikanalytics_website_id', $data['hookpiwikanalytics_website_id'], false, true);
-            ConfigQuery::write('hookpiwikanalytics_enable_ecommerce', $data['hookpiwikanalytics_enable_ecommerce'], false, true);
+            ConfigQuery::write('hookpiwikanalytics_enable_subdomains', ($data['hookpiwikanalytics_enable_subdomains'] === 'on' ? true : false), false, true);
+            ConfigQuery::write('hookpiwikanalytics_custom_campaign_name', $data['hookpiwikanalytics_custom_campaign_name'], false, true);
+            ConfigQuery::write('hookpiwikanalytics_custom_campaign_keyword', $data['hookpiwikanalytics_custom_campaign_keyword'], false, true);
         } catch (\Exception $e) {
             $resp['error'] = 1;
             $resp['message'] = $e->getMessage();

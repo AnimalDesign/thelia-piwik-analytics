@@ -46,17 +46,41 @@ class Configuration extends BaseForm
                 )
             )
             ->add(
-                'hookpiwikanalytics_enable_ecommerce',
+                'hookpiwikanalytics_enable_subdomains',
                 'checkbox',
                 array(
                     'required' => false,
-                    'data' => (bool)ConfigQuery::read('hookpiwikanalytics_enable_ecommerce', ''),
-                    'label' => $this->translator->trans('Enable e-commerce tracking'),
+                    'data' => (bool)ConfigQuery::read('hookpiwikanalytics_enable_subdomains', false),
+                    'label' => $this->translator->trans('Enable tracking across subdomains'),
                     'label_attr' => array(
-                        'for' => 'hookpiwikanalytics_enable_ecommerce',
+                        'for' => 'hookpiwikanalytics_enable_subdomains',
                     ),
                 )
-            );
+            )
+            ->add(
+                'hookpiwikanalytics_custom_campaign_name',
+                'text',
+                array(
+                    'required' => false,
+                    'data' => ConfigQuery::read('hookpiwikanalytics_custom_campaign_name', ''),
+                    'label' => $this->translator->trans('Custom campaign name parameter'),
+                    'label_attr' => array(
+                        'for' => 'hookpiwikanalytics_custom_campaign_name',
+                    ),
+                )
+            )
+            ->add(
+                'hookpiwikanalytics_custom_campaign_keyword',
+                'text',
+                array(
+                    'required' => false,
+                    'data' => ConfigQuery::read('hookpiwikanalytics_custom_campaign_keyword', ''),
+                    'label' => $this->translator->trans('Custom campaign keyword parameter'),
+                    'label_attr' => array(
+                        'for' => 'hookpiwikanalytics_custom_campaign_keyword',
+                    ),
+                )
+            );            
     }
 
     /**
