@@ -8,6 +8,7 @@ use Thelia\Model\ConfigQuery;
 use Thelia\Model\ProductQuery;
 use Thelia\Model\ProductCategoryQuery;
 use Thelia\Model\CategoryQuery;
+use Thelia\Model\OrderQuery;
 
 /**
  * Class FrontHook.
@@ -25,6 +26,7 @@ class FrontHook extends BaseHook
         $options = array();
 
         switch ($this->getRequest()->get('_view')) {
+            // Category page viewed
             case 'category':
                 $categoryId = $this->getRequest()->get('category_id');
 
@@ -33,12 +35,13 @@ class FrontHook extends BaseHook
 
                 $options[] = array(
                     'setEcommerceView',
-                    false, // SKU or ID
-                    false, // Name
+                    false,
+                    false,
                     $defaultCategory->getTitle(), // Category
                 );
                 break;
             
+            // Product detail page viewed
             case 'product':
                 $productId = $this->getRequest()->getProductId();
                 $product = ProductQuery::create()
@@ -53,8 +56,36 @@ class FrontHook extends BaseHook
                     'setEcommerceView',
                     ($product->getRef() ? $product->getRef() : $product->getId()), // SKU or ID
                     $product->getTitle(), // Name
-                    (isset($defaultCategory) ? $defaultCategory->getTitle() : false), // Category
+                    (isset($defaultCategory) ? $defaultCategory->getTitle() : false), // Default product category
                     false, // Price
+                );
+                break;
+            
+            // Order confirmation page
+            case 'order-placed':
+                $orderId = $this->getRequest()->get('order_id');
+                $order = OrderQuery::create()
+                    ->findPk($orderId);
+                
+                foreach ($order->getOrderProducts() as $orderProduct) {
+                    $options[] = array(
+                        'addEcommerceItem',
+                        ($orderProduct->getProductRef() ? $orderProduct->getProductRef() : $orderProduct->getId()), // SKU or ID
+                        $orderProduct->getTitle(), // Product name
+                        false, // Default product category
+                        floatval($orderProduct->getPrice()), // Product price
+                        $orderProduct->getQuantity() // Product quantity
+                    );
+                }    
+                
+                $options[] = array(
+                    'trackEcommerceOrder',
+                    $order->getRef(), // Unique Order ID
+                    floatval($order->getTotalAmount($tax, true, true)), // Order Revenue grand total (includes tax, shipping, and subtracted discount)
+                    floatval($order->getTotalAmount($tax, false, true)), // Order sub total (excludes shipping)
+                    floatval($tax), // Tax amount
+                    floatval($order->getPostageTax()), // Shipping amount
+                    (floatval($order->getDiscount()) == 0 ? false : floatval($order->getDiscount())) // Discount offered
                 );
                 break;
         }
