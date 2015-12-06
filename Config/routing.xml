@@ -2,7 +2,7 @@
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://symfony.com/schema/routing" xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
 	<route id="hookpiwikanalytics.configuration" methods="post" path="/admin/module/hookpiwikanalytics/save">
-		<default key="_controller">HookPiwikAnalytics\Controller\Configuration::saveAction</default>
+		<default key="_controller">HookPiwikAnalytics\Controller\ConfigurationController::saveAction</default>
 	</route>
 
 </routes>

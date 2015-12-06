@@ -5,7 +5,7 @@
 	<loops></loops>
 
 	<forms>
-		<form class="HookPiwikAnalytics\Form\ConfigurationController" name="hookpiwikanalytics.configuration.form"/>
+		<form class="HookPiwikAnalytics\Form\Configuration" name="hookpiwikanalytics.configuration.form"/>
 	</forms>
 
 	<commands></commands>
