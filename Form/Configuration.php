@@ -50,7 +50,7 @@ class Configuration extends BaseForm
                 'checkbox',
                 array(
                     'required' => false,
-                    'data' => (bool)ConfigQuery::read('hookpiwikanalytics_enable_subdomains', false),
+                    'value' => (bool)ConfigQuery::read('hookpiwikanalytics_enable_subdomains', false),
                     'label' => $this->translator->trans('Enable tracking across subdomains'),
                     'label_attr' => array(
                         'for' => 'hookpiwikanalytics_enable_subdomains',
