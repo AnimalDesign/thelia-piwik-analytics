@@ -38,7 +38,7 @@ class Configuration extends BaseForm
                     'constraints' => array(
                         new NotBlank(),
                     ),
-                    'data' => ConfigQuery::read('hookpiwikanalytics_website_id', ''),
+                    'data' => ConfigQuery::read('hookpiwikanalytics_website_id', 0),
                     'label' => $this->translator->trans('Website ID'),
                     'label_attr' => array(
                         'for' => 'hookpiwikanalytics_website_id',
