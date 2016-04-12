@@ -17,12 +17,19 @@ use Thelia\Model\OrderQuery;
  */
 class FrontHook extends BaseHook
 {
+    protected $url;
+    protected $website_id;
+
+    public function __construct()
+    {
+        $this->url = ConfigQuery::read('hookpiwikanalytics_url', false);
+        $this->website_id = ConfigQuery::read('hookpiwikanalytics_website_id', false);
+    }
+
     /* Include tracking bug
      */
     public function onMainBodyBottom(HookRenderEvent $event)
     {
-        $url = ConfigQuery::read('hookpiwikanalytics_url', false);
-        $website_id = ConfigQuery::read('hookpiwikanalytics_website_id', false);
         $options = array();
 
         switch ($this->getRequest()->get('_view')) {
@@ -60,48 +67,20 @@ class FrontHook extends BaseHook
                     false, // Price
                 );
                 break;
-            
-            // Order confirmation page
-            case 'order-placed':
-                $orderId = $this->getRequest()->get('order_id');
-                $order = OrderQuery::create()
-                    ->findPk($orderId);
-                
-                foreach ($order->getOrderProducts() as $orderProduct) {
-                    $options[] = array(
-                        'addEcommerceItem',
-                        ($orderProduct->getProductRef() ? $orderProduct->getProductRef() : $orderProduct->getId()), // SKU or ID
-                        $orderProduct->getTitle(), // Product name
-                        false, // Default product category
-                        floatval($orderProduct->getPrice()), // Product price
-                        $orderProduct->getQuantity() // Product quantity
-                    );
-                }    
-                
-                $options[] = array(
-                    'trackEcommerceOrder',
-                    $order->getRef(), // Unique Order ID
-                    floatval($order->getTotalAmount($tax, true, true)), // Order Revenue grand total (includes tax, shipping, and subtracted discount)
-                    floatval($order->getTotalAmount($tax, false, true)), // Order sub total (excludes shipping)
-                    floatval($tax), // Tax amount
-                    floatval($order->getPostageTax()), // Shipping amount
-                    (floatval($order->getDiscount()) == 0 ? false : floatval($order->getDiscount())) // Discount offered
-                );
-                break;
         }
 
-        if ($code = $this->generateTrackingCode($url, $website_id, $options)) {
+        if ($code = $this->generateTrackingCode($options)) {
             $event->add($code);
         }
     }
 
-    private function generateTrackingCode($url, $website_id, $options)
+    private function generateTrackingCode($options)
     {
-        if (!empty($url) && is_numeric($website_id)) {
+        if (!empty($this->url) && is_numeric($this->website_id)) {
             // remove http, https, add // before and / after url
-            $url = preg_replace('#^https?://#', '', $url);
-            $url = '//'.ltrim($url, '//');
-            $url = rtrim($url, '/').'/';
+            $this->url = preg_replace('#^https?://#', '', $this->url);
+            $this->url = '//'.ltrim($this->url, '//');
+            $this->url = rtrim($this->url, '/').'/';
             
             if((bool)ConfigQuery::read('hookpiwikanalytics_enable_subdomains', false)) {
                 // Get host w/o www or subdomain, see http://snipplr.com/view/61235/
@@ -140,14 +119,14 @@ class FrontHook extends BaseHook
                 _paq.push([\'trackPageView\']);
                 _paq.push([\'enableLinkTracking\']);
                 (function() {
-                    var u="'.$url.'";
+                    var u="'.$this->url.'";
                     _paq.push([\'setTrackerUrl\', u+\'piwik.php\']);
-                    _paq.push([\'setSiteId\', '.$website_id.']);
+                    _paq.push([\'setSiteId\', '.$this->website_id.']);
                     var d=document, g=d.createElement(\'script\'), s=d.getElementsByTagName(\'script\')[0];
                     g.type=\'text/javascript\'; g.async=true; g.defer=true; g.src=u+\'piwik.js\'; s.parentNode.insertBefore(g,s);
                 })();
             </script>
-            <noscript><p><img src="'.$url.'piwik.php?idsite='.$website_id.'" style="border:0;" alt="" /></p></noscript>
+            <noscript><p><img src="'.$this->url.'piwik.php?idsite='.$this->website_id.'" style="border:0;" alt="" /></p></noscript>
             ';
 
             return $code;
