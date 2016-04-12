@@ -3,7 +3,8 @@
     "license": "MIT",
     "type": "thelia-module",
     "require": {
-        "thelia/installer": "~1.1"
+        "thelia/installer": "~1.1",
+        "piwik/piwik-php-tracker": "~1.0"
     },
     "extra": {
         "installer-name": "HookPiwikAnalytics"
