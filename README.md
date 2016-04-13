@@ -1,5 +1,7 @@
 # Piwik Analytics integration for Thelia E-Commerce
 
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+
 This module implements [Piwik](http://piwik.org) user and e-commerce tracking into [Thelia](http://thelia.net).
 It reports the following tracking events:
 
@@ -31,33 +33,7 @@ Before installing this module, make sure, that [e-commerce tracking is enabled](
 
 ### Composer
 
-Note that this module is not yet registered at [Packagist](https://packagist.org).
-
-Meanwhile, the GitHub repository needs to specified in the `composer.json`:
-
-```
-{
-    "name": "thelia/thelia-project",
-    "description": "Thelia is an ecommerce CMS.",
-    "license": "LGPL-3.0+",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/thelia/Propel2"
-        },
-        {
-            "url": "https://github.com/AnimalDesign/thelia-piwik-analytics.git",
-            "type": "git"
-        }
-    ],
-    "require": {
-        "thelia/core": "2.3.0-beta1",
-		[...]
-		"animal/hook-piwik-analytics-module": "dev-master"
-    },
-    [...]
-}
-```
+`composer require animal/hook-piwik-analytics-module`
 
 After finishing the installation, activate the module in the modules section of the back office and fill in `Piwik URL` and `Website ID`.
 
