@@ -77,9 +77,7 @@ class FrontHook extends BaseHook
     private function generateTrackingCode($options)
     {
         if (!empty($this->url) && is_numeric($this->website_id)) {
-            // remove http, https, add // before and / after url
-            $this->url = preg_replace('#^https?://#', '', $this->url);
-            $this->url = '//'.ltrim($this->url, '//');
+            // remove / after url
             $this->url = rtrim($this->url, '/').'/';
             
             if((bool)ConfigQuery::read('hookpiwikanalytics_enable_subdomains', false)) {
