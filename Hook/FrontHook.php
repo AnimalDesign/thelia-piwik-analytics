@@ -90,6 +90,16 @@ class FrontHook extends BaseHook
                 );
             }
 
+			// Enable Content Tracking
+			// See http://piwik.org/docs/content-tracking/
+			if((bool)ConfigQuery::read('hookpiwikanalytics_enable_contenttracking', false)) {
+				if((bool)ConfigQuery::read('hookpiwikanalytics_enable_contenttracking_visible_only', false)) {
+                	$options[] = array('trackVisibleContentImpressions');
+				} else {
+					$options[] = array('trackAllContentImpressions');
+				}
+            }
+
             if(!empty(trim(ConfigQuery::read('hookpiwikanalytics_custom_campaign_name', '')))) {
                 $options[] = array(
                     'setCampaignNameKey',

@@ -23,10 +23,8 @@
 
         <div class="form-container">
             <div class="col-md-12">
-
-            {form name="hookpiwikanalytics.configuration.form"}
+                {form name="hookpiwikanalytics.configuration.form"}
                 <form method="POST" id="hookpiwikanalytics-form" action="{url path="/admin/module/hookpiwikanalytics/save"}" {form_enctype} class="clearfix">
-
                     {form_hidden_fields}
 
                     {form_field field='hookpiwikanalytics_url'}
@@ -57,32 +55,62 @@
                         </label>
                     </div>
                     {/form_field}
-                    
-                    {form_field field='hookpiwikanalytics_custom_campaign_name'}
-                    <div class="form-group {if $error}has-error{/if}">
-                        <label for="{$label_attr.for}" class="control-label">{$label}{if $required}<span class="required">*</span>{/if}: </label>
-                        <input type="text" value="{$value}" id="{$label_attr.for}" name="{$name}" class="form-control" title="{$label}">
+
+    				<fieldset class="form-group">
+                        <legend>{intl d='hookpiwikanalytics.ai' l='Content Tracking'}</legend>
+                        <p class="form-text text-muted">{intl d='hookpiwikanalytics.ai' l='For detailed information on how to integrate Content Tracking, refer to the <a href="%link" target="_blank">Piwik Developer Documentation</a>.' link='https://developer.piwik.org/guides/content-tracking'}</p>
+                        {form_field form=$form field="hookpiwikanalytics_enable_contenttracking"}
+                        {assign "content_tacking_enabled" $value}
+                        <div class="form-check {if $error}has-error{/if}">
+                            <label class="control-label" for="{$label_attr.for}">
+                                <input type="checkbox" name="{$name}" value="on" id="{$label_attr.for}" {if $value}checked{/if} />
+                                {$label}
+                                {if $required}<span class="required">*</span>{/if}
+    
+                                {form_error form=$form field="hookpiwikanalytics_enable_contenttracking"}
+                                <br />
+                                <span class="error">{$message}</span>
+                                {/form_error}
+                            </label>
+                        </div>
+                        {/form_field}
+                        {form_field form=$form field="hookpiwikanalytics_enable_contenttracking_visible_only"}
+                        <div class="form-check {if $error}has-error{/if}">
+        					<label class="control-label" for="{$label_attr.for}">
+        						<input type="checkbox" name="{$name}" value="on" id="{$label_attr.for}" {if $value}checked{/if} {if !$content_tacking_enabled} disabled{/if} />
+        						{$label}
+        						{if $required}<span class="required">*</span>{/if}
+
+        						{form_error form=$form field="hookpiwikanalytics_enable_contenttracking_visible_only"}
+        						<br />
+        						<span class="error">{$message}</span>
+        						{/form_error}
+        					</label>
+                            {/form_field}
+                        </div>
+    				</fieldset>
+
+                    <fieldset class="form-group">
+                        <legend>{intl d='hookpiwikanalytics.ai' l='Campaigns'}</legend>
+                        {form_field field='hookpiwikanalytics_custom_campaign_name'}
+                        <div class="form-group {if $error}has-error{/if}">
+                            <label for="{$label_attr.for}" class="control-label">{$label}{if $required}<span class="required">*</span>{/if}: </label>
+                            <input type="text" value="{$value}" id="{$label_attr.for}" name="{$name}" class="form-control" title="{$label}">
+                        </div>
+                        {/form_field}
+                        
+                        {form_field field='hookpiwikanalytics_custom_campaign_keyword'}
+                        <div class="form-group {if $error}has-error{/if}">
+                            <label for="{$label_attr.for}" class="control-label">{$label}{if $required}<span class="required">*</span>{/if}: </label>
+                            <input type="text" value="{$value}" id="{$label_attr.for}" name="{$name}" class="form-control" title="{$label}">
+                        </div>
+                        {/form_field}
                     </div>
-                    {/form_field}
-                    
-                    {form_field field='hookpiwikanalytics_custom_campaign_keyword'}
-                    <div class="form-group {if $error}has-error{/if}">
-                        <label for="{$label_attr.for}" class="control-label">{$label}{if $required}<span class="required">*</span>{/if}: </label>
-                        <input type="text" value="{$value}" id="{$label_attr.for}" name="{$name}" class="form-control" title="{$label}">
-                    </div>
-                    {/form_field}
 
                     <button type="submit" id="hookpiwikanalytics-save" name="hookpiwikanalytics_save" value="save" class="form-submit-button btn btn-sm btn-default" title="{intl d='hookpiwikanalytics.ai' l='Save'}">{intl d='hookpiwikanalytics.ai' l='Save'}</button>
                 </form>
-            {/form}
-
+                {/form}
             </div>
-
         </div>
-
     </div>
 </div>
-
-
-
-

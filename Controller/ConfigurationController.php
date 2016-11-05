@@ -35,6 +35,8 @@ class ConfigurationController extends BaseAdminController
             ConfigQuery::write('hookpiwikanalytics_url', $data['hookpiwikanalytics_url']);
             ConfigQuery::write('hookpiwikanalytics_website_id', $data['hookpiwikanalytics_website_id']);
             ConfigQuery::write('hookpiwikanalytics_enable_subdomains', is_bool($data['hookpiwikanalytics_enable_subdomains']) ? (int) ($data['hookpiwikanalytics_enable_subdomains']) : $data['hookpiwikanalytics_enable_subdomains']);
+			ConfigQuery::write('hookpiwikanalytics_enable_contenttracking', is_bool($data['hookpiwikanalytics_enable_contenttracking']) ? (int) ($data['hookpiwikanalytics_enable_contenttracking']) : $data['hookpiwikanalytics_enable_contenttracking']);
+			ConfigQuery::write('hookpiwikanalytics_enable_contenttracking_visible_only', is_bool($data['hookpiwikanalytics_enable_contenttracking_visible_only']) ? (int) ($data['hookpiwikanalytics_enable_contenttracking_visible_only']) : $data['hookpiwikanalytics_enable_contenttracking_visible_only']);
             ConfigQuery::write('hookpiwikanalytics_custom_campaign_name', $data['hookpiwikanalytics_custom_campaign_name']);
             ConfigQuery::write('hookpiwikanalytics_custom_campaign_keyword', $data['hookpiwikanalytics_custom_campaign_keyword']);
         } catch (\Exception $e) {

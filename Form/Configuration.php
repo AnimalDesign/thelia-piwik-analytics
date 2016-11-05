@@ -58,6 +58,30 @@ class Configuration extends BaseForm
                 )
             )
             ->add(
+                'hookpiwikanalytics_enable_contenttracking',
+                'checkbox',
+                array(
+                    'required' => false,
+                    'value' => (bool)ConfigQuery::read('hookpiwikanalytics_enable_contenttracking', false),
+                    'label' => $this->translator->trans('Enable Content Tracking'),
+                    'label_attr' => array(
+                        'for' => 'hookpiwikanalytics_enable_contenttracking',
+                    ),
+                )
+            )
+			->add(
+				'hookpiwikanalytics_enable_contenttracking_visible_only',
+				'checkbox',
+				array(
+					'required' => false,
+					'value' => (bool)ConfigQuery::read('hookpiwikanalytics_enable_contenttracking_visible_only', false),
+					'label' => $this->translator->trans('Only track visible content'),
+					'label_attr' => array(
+						'for' => 'hookpiwikanalytics_enable_contenttracking_visible_only',
+					),
+				)
+			)
+            ->add(
                 'hookpiwikanalytics_custom_campaign_name',
                 'text',
                 array(
@@ -80,7 +104,7 @@ class Configuration extends BaseForm
                         'for' => 'hookpiwikanalytics_custom_campaign_keyword',
                     ),
                 )
-            );            
+            );          
     }
 
     /**
