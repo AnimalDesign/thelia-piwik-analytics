@@ -90,16 +90,6 @@ class FrontHook extends BaseHook
                 );
             }
 
-			// Enable Content Tracking
-			// See http://piwik.org/docs/content-tracking/
-			if((bool)ConfigQuery::read('hookpiwikanalytics_enable_contenttracking', false)) {
-				if((bool)ConfigQuery::read('hookpiwikanalytics_enable_contenttracking_visible_only', false)) {
-                	$options[] = array('trackVisibleContentImpressions');
-				} else {
-					$options[] = array('trackAllContentImpressions');
-				}
-            }
-
             if(!empty(trim(ConfigQuery::read('hookpiwikanalytics_custom_campaign_name', '')))) {
                 $options[] = array(
                     'setCampaignNameKey',
@@ -114,6 +104,25 @@ class FrontHook extends BaseHook
                 );
             }
 
+            // Enable User ID tracking
+            // See http://piwik.org/docs/user-id/
+            if ($customer = $this->getSession()->getCustomerUser() !== null) {
+                $options[] = array(
+                    'setUserId',
+                    $this->getSession()->getCustomerUser()->getRef()
+                );
+            }
+
+            // Enable Content Tracking
+			// See http://piwik.org/docs/content-tracking/
+			if((bool)ConfigQuery::read('hookpiwikanalytics_enable_contenttracking', false)) {
+				if((bool)ConfigQuery::read('hookpiwikanalytics_enable_contenttracking_visible_only', false)) {
+                	$options[] = array('trackVisibleContentImpressions');
+				} else {
+					$options[] = array('trackAllContentImpressions');
+				}
+            }
+
             $code = '
             <script type="text/javascript">
                 var _paq = _paq || [];';
@@ -124,8 +133,8 @@ class FrontHook extends BaseHook
             }
             
             $code .= '
-                _paq.push([\'trackPageView\']);
                 _paq.push([\'enableLinkTracking\']);
+                _paq.push([\'trackPageView\']);
                 (function() {
                     var u="'.$this->url.'";
                     _paq.push([\'setTrackerUrl\', u+\'piwik.php\']);
