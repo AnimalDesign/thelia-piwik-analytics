@@ -7,7 +7,7 @@ It reports the following tracking events:
 
 ## User Tracking
 
-This module uses the `main.body-bottom` hook to include the piwik javascript bug into the frontend of a Thelia installation. All user activities can therefor be tracked.
+This module uses the `main.body-bottom` hook to include the piwik javascript bug into the frontend of a Thelia installation. Most user activities can therefor be tracked. This includes [Content Tracking](http://piwik.org/docs/content-tracking/) and [User ID Tracking](http://piwik.org/docs/user-id/) for logged in customers.
 
 ## E-commerce Tracking
 
@@ -17,10 +17,10 @@ Additional to the user tracking, these e-commerce events are tracked:
 - Tracking Add to Cart & Items Added to the Cart
 - Tracking Product Page Views & Category Page Views
 
-Have a look at the [e-commerce analytics docs](http://piwik.org/docs/ecommerce-analytics) for more information.
+Have a look at the [Piwik e-commerce analytics docs](http://piwik.org/docs/ecommerce-analytics) for more information.
 
 Note that the cart and order tracking uses the [PHP Client for Piwik Analytics Tracking API](https://github.com/piwik/piwik-php-tracker) to communicate with
-Piwik.
+Piwik. This events are still tracked, even if the Piwik JavaScript tracker is blocked by an ad or privacy blocker.
 
 ## Installation
 
